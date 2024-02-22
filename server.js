@@ -4,6 +4,9 @@ import cors from "cors";
 import { fileURLToPath } from "url";
 import { logger } from "./middleware/logEvents.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { subdirRouter } from "./routes/subdir.js";
+import { rootRouter } from "./routes/root.js";
+import { employeesRouter } from "./routes/api/employees.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,51 +42,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Built-in middleware to serve static files
-app.use(express.static(path.join(__dirname, "/public")));
+app.use("/", express.static(path.join(__dirname, "/public")));
+app.use("/subdir", express.static(path.join(__dirname, "/public")));
 
-app.get("^/$|/index(.html)?", (req, res) => {
-  // res.sendFile("./views/index.html", { root: __dirname });
-  res.sendFile(path.join(__dirname, "views", "index.html"));
-});
-
-app.get("/new-page(.html)?", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "new-page.html"));
-});
-
-app.get("/old-page(.html)?", (req, res) => {
-  res.redirect(301, "/new-page.html"); // 302 by default
-});
-
-// Chaining route handlers (works similar to middleware)
-// Option 1
-app.get(
-  "/hello(.html)?",
-  (req, res, next) => {
-    console.log("Attempted to load hello.html");
-    next();
-  },
-  (req, res) => {
-    res.send("Hello World!");
-  }
-);
-
-//Option 2
-function one(req, res, next) {
-  console.log("one");
-  next();
-}
-
-function two(req, res, next) {
-  console.log("two");
-  next();
-}
-
-function three(req, res) {
-  console.log("three");
-  res.send("Finished!");
-}
-
-app.get("/chain(.html)?", [one, two, three]);
+// Routes
+app.use("/", rootRouter);
+app.use("/subdir", subdirRouter);
+app.use("/employees", employeesRouter);
 
 app.all("*", (req, res) => {
   res.status(404);
