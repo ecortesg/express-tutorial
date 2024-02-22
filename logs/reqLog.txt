@@ -1,0 +1,11 @@
+20240221	20:48:04	1a5fb718-dc0a-4118-80e0-4a0d3cca4a53	GET	undefined	/
+20240221	20:48:04	c0254082-9ccc-40a2-b2d3-97d8f82be0ae	GET	undefined	/css/style.css
+20240221	20:50:41	7d90b96b-9b5b-4aee-a19c-baacb90ead5e	GET	undefined	/
+20240221	20:50:41	39a305bb-fb7b-4383-9563-c17e9d6274d8	GET	undefined	/css/style.css
+20240221	21:16:02	93b05785-3f77-4bf8-b12a-dd0454e2d1ae	GET	undefined	/
+20240221	21:16:02	edf79f52-7bd5-45be-b012-9397d7564ad5	GET	undefined	/css/style.css
+20240221	21:24:04	7d6c2765-e12c-403a-8190-19e134bbe4d3	GET	undefined	/
+20240221	23:18:36	6070ea5c-ea89-4b8f-88df-e8079b7af057	GET	undefined	/dave
+20240221	23:18:36	b1d47f79-ee90-43e2-befe-2d31d81ed9b7	GET	undefined	/css/style.css
+20240221	23:21:21	a6e95955-4b39-4c64-9be7-5df6e1d1f9fa	GET	undefined	/dave
+20240221	23:21:21	6a0f97f5-d0fe-41b1-ad84-7dde493a6d9d	GET	undefined	/css/style.css
