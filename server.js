@@ -4,9 +4,9 @@ import cors from "cors";
 import { fileURLToPath } from "url";
 import { logger } from "./middleware/logEvents.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-import { subdirRouter } from "./routes/subdir.js";
 import { rootRouter } from "./routes/root.js";
 import { employeesRouter } from "./routes/api/employees.js";
+import { corsOptions } from "./config/corsOptions.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,24 +18,10 @@ const PORT = process.env.PORT || 3500;
 app.use(logger);
 
 // Third-party middleware for Cross Origin Resource Sharing
-const whitelist = [
-  "https://www.yoursite.com",
-  "http://127.0.0.1:5173",
-  "http://localhost:3500",
-];
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  optionsSuccessStatus: 200,
-};
+
 app.use(cors(corsOptions));
 
-// Built-in middleware to handle urlencoded data (form data)
+// Built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
 
 // Built-in middleware for json
@@ -43,13 +29,12 @@ app.use(express.json());
 
 // Built-in middleware to serve static files
 app.use("/", express.static(path.join(__dirname, "/public")));
-app.use("/subdir", express.static(path.join(__dirname, "/public")));
 
 // Routes
 app.use("/", rootRouter);
-app.use("/subdir", subdirRouter);
 app.use("/employees", employeesRouter);
 
+// Catch 404
 app.all("*", (req, res) => {
   res.status(404);
   if (req.accepts("html")) {

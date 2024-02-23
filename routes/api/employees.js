@@ -1,33 +1,19 @@
 import express from "express";
-import employees from "../../data/employees.json" assert { type: "json" };
+import {
+  getAllEmployees,
+  createNewEmployee,
+  updateEmployee,
+  deleteEmployee,
+  getEmployee,
+} from "../../controllers/employeesController.js";
 
 export const employeesRouter = express.Router();
-const data = {};
-data.employees = employees;
 
 employeesRouter
   .route("/")
-  .get((req, res) => {
-    res.json(data.employees);
-  })
-  .post((req, res) => {
-    res.json({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-    });
-  })
-  .put((req, res) => {
-    res.json({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-    });
-  })
-  .delete((req, res) => {
-    res.json({
-      id: req.body.id,
-    });
-  });
+  .get(getAllEmployees)
+  .post(createNewEmployee)
+  .put(updateEmployee)
+  .delete(deleteEmployee);
 
-employeesRouter.route("/:id").get((req, res) => {
-  res.json({ id: req.params.id });
-});
+employeesRouter.route("/:id").get(getEmployee);

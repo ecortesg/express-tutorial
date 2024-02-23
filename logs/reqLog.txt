@@ -48,3 +48,8 @@
 20240222	14:03:29	d8025c8e-7ce8-40a6-bd22-fc99ccfcd4c1	GET	undefined	/employees/
 20240222	14:03:33	b4022440-b922-4fd8-9cb6-3f3943a45aeb	GET	undefined	/employees/1
 20240222	14:04:32	9f9e103e-e75f-4d6e-89e8-ce1be27f4dd8	GET	undefined	/employees/1
+20240222	19:11:09	5e68c41c-6e0b-4f73-954e-ce0b94149642	GET	undefined	/employees/
+20240222	19:11:25	c5d64c9a-b19c-4da8-88d0-7a48fc082e94	POST	undefined	/employees
+20240222	19:13:33	c7db3dca-348a-4227-b306-1973da9f1bf8	PUT	undefined	/employees
+20240222	19:13:57	470f1e77-e765-4470-82d7-42b9ed0591aa	DELETE	undefined	/employees
+20240222	19:14:46	502a3b83-d22e-4d1e-b776-4ab11b9bb779	GET	undefined	/employees/1
