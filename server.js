@@ -6,6 +6,8 @@ import { logger } from "./middleware/logEvents.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { rootRouter } from "./routes/root.js";
 import { employeesRouter } from "./routes/api/employees.js";
+import { registerRouter } from "./routes/register.js";
+import { authRouter } from "./routes/auth.js";
 import { corsOptions } from "./config/corsOptions.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -33,6 +35,8 @@ app.use("/", express.static(path.join(__dirname, "/public")));
 // Routes
 app.use("/", rootRouter);
 app.use("/employees", employeesRouter);
+app.use("/register", registerRouter);
+app.use("/auth", authRouter);
 
 // Catch 404
 app.all("*", (req, res) => {
