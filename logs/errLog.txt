@@ -5,3 +5,5 @@
 20240222	14:01:21	8e52a065-4c30-46a3-bcad-3dbf880f08af	TypeError: res.json is not a function
 20240222	14:03:25	bc0904a2-2c21-4411-acfc-7eeb8ebc454c	TypeError: res.json is not a function
 20240222	14:03:33	b02f3a03-7da2-4cbe-a857-f470e6686021	TypeError: res.json is not a function
+20240224	15:35:53	fa398c02-6cc8-43c6-8d98-4c6d9423b5f1	ReferenceError: authorization is not defined
+20240224	15:36:12	7be2bb4f-c25e-413a-91a4-d14a8e90fe75	ReferenceError: authorization is not defined
