@@ -7,3 +7,5 @@
 20240222	14:03:33	b02f3a03-7da2-4cbe-a857-f470e6686021	TypeError: res.json is not a function
 20240224	15:35:53	fa398c02-6cc8-43c6-8d98-4c6d9423b5f1	ReferenceError: authorization is not defined
 20240224	15:36:12	7be2bb4f-c25e-413a-91a4-d14a8e90fe75	ReferenceError: authorization is not defined
+20240224	21:46:16	0e8730d8-79bd-4b6c-9e26-0b2fefb26dce	TypeError: res.sendSTatus is not a function
+20240224	21:48:48	60ee866d-c74a-411a-8447-16bdb48d2f27	Error: Cannot set headers after they are sent to the client

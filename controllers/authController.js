@@ -28,9 +28,10 @@ export async function handleLogin(req, res) {
   // Evaluate password
   const match = await bcrypt.compare(pwd, foundUser.password);
   if (match) {
+    const roles = Object.values(foundUser.roles);
     // Create JWTs
     const accessToken = jwt.sign(
-      { username: foundUser.username },
+      { UserInfo: { username: foundUser.username, roles } },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30s" }
     );
@@ -53,7 +54,7 @@ export async function handleLogin(req, res) {
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       sameSite: "None",
-      secure: true,
+      secure: true, // Comment when testing refresh token route in dev
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.json({ accessToken });
