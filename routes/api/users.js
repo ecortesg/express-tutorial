@@ -1,5 +1,9 @@
 import express from "express";
-import { getAllUsers, deleteUser } from "../../controllers/usersController.js";
+import {
+  getAllUsers,
+  deleteUser,
+  getUser,
+} from "../../controllers/usersController.js";
 import { ROLES_LIST } from "../../config/roles_list.js";
 import { verifyRoles } from "../../middleware/verifyRoles.js";
 
@@ -9,3 +13,5 @@ usersRouter
   .route("/")
   .get(getAllUsers)
   .delete(verifyRoles(ROLES_LIST.Admin), deleteUser);
+
+usersRouter.route("/:id").get(getUser);

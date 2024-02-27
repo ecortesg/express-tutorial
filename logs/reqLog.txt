@@ -243,3 +243,5 @@
 20240226	20:32:03	6ce910b6-9178-4ac5-baaf-6864110e8e1a	GET	undefined	/users
 20240226	20:35:04	9956736a-be2e-4b3f-9efd-394b4dba43b4	POST	undefined	/auth
 20240226	20:35:15	9cfbb581-d004-4a31-8bc6-a238aea9a243	DELETE	undefined	/users
+20240226	20:49:43	4b7e6920-014e-47a0-928c-76c9a5aeff5b	POST	undefined	/auth
+20240226	20:49:53	cfed1973-8af7-4b1e-a855-a6efcbf6ed7e	GET	undefined	/users/65dbb39b39d0e4a7645cfab7
