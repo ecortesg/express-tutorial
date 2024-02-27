@@ -1,25 +1,34 @@
+import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import mongoose from "mongoose";
 import { fileURLToPath } from "url";
 import { logger } from "./middleware/logEvents.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { rootRouter } from "./routes/root.js";
 import { employeesRouter } from "./routes/api/employees.js";
 import { registerRouter } from "./routes/register.js";
+import { refreshRouter } from "./routes/refresh.js";
+import { logoutRouter } from "./routes/logout.js";
 import { authRouter } from "./routes/auth.js";
 import { corsOptions } from "./config/corsOptions.js";
 import { verifyJWT } from "./middleware/verifyJWT.js";
-import { refreshRouter } from "./routes/refresh.js";
-import { logoutRouter } from "./routes/logout.js";
 import { credentials } from "./middleware/credentials.js";
+import { connectDB } from "./config/dbConn.js";
+import { usersRouter } from "./routes/api/users.js";
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3500;
+
+// Connect to MongoDB
+connectDB();
 
 // Custom middleware logger
 app.use(logger);
@@ -52,6 +61,7 @@ app.use("/logout", logoutRouter);
 
 // Protected routes
 app.use(verifyJWT);
+app.use("/users", usersRouter);
 app.use("/employees", employeesRouter);
 
 // Catch 404
@@ -69,4 +79,7 @@ app.all("*", (req, res) => {
 // Error handler
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+mongoose.connection.once("connected", () => {
+  console.log("Connected to MongoDB");
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});

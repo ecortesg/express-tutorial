@@ -1,23 +1,13 @@
-import users from "../model/users.json" assert { type: "json" };
+import { User } from "../model/User.js";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const usersDB = {
-  users,
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
-
-export function handleRefreshToken(req, res) {
+export async function handleRefreshToken(req, res) {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
-  const foundUser = usersDB.users.find(
-    (person) => person.refreshToken === refreshToken
-  );
+
+  const foundUser = await User.findOne({ refreshToken }).exec();
+
   if (!foundUser) return res.sendStatus(403); // Forbidden
 
   // Evaluate jwt

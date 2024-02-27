@@ -1,21 +1,6 @@
-import users from "../model/users.json" assert { type: "json" };
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import fsPromises from "fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-dotenv.config();
-
-const usersDB = {
-  users,
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
+import { User } from "../model/User.js";
 
 export async function handleLogin(req, res) {
   const { user, pwd } = req.body;
@@ -23,12 +8,16 @@ export async function handleLogin(req, res) {
     return res
       .status(400)
       .json({ message: "Username and password are required." });
-  const foundUser = usersDB.users.find((person) => person.username === user);
+
+  const foundUser = await User.findOne({ username: user }).exec();
+
   if (!foundUser) return res.sendStatus(401);
+
   // Evaluate password
   const match = await bcrypt.compare(pwd, foundUser.password);
   if (match) {
     const roles = Object.values(foundUser.roles);
+
     // Create JWTs
     const accessToken = jwt.sign(
       { UserInfo: { username: foundUser.username, roles } },
@@ -40,21 +29,16 @@ export async function handleLogin(req, res) {
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "1d" }
     );
+
     // Saving refresh token with current user
-    const otherUsers = usersDB.users.filter(
-      (person) => person.username !== foundUser.username
-    );
-    const currentUser = { ...foundUser, refreshToken };
-    usersDB.setUsers([...otherUsers, currentUser]);
-    await fsPromises.writeFile(
-      path.join(__dirname, "..", "model", "users.json"),
-      JSON.stringify(usersDB.users)
-    );
+    foundUser.refreshToken = refreshToken;
+    const result = await foundUser.save();
+
     // Send refresh token as an httpOnly cookie since it is much safer than storing it in localstorage in the front end
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       sameSite: "None",
-      secure: true, // Comment when testing refresh token route in dev
+      // secure: true, // Uncomment for production
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.json({ accessToken });
